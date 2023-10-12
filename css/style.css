@@ -1,0 +1,127 @@
+@font-face {
+  font-family: simpsons;
+  src: url("../assets/fonts/akbar.ttf");
+}
+
+:root {
+  --timing: 400ms;
+  --rotation: 20deg;
+  --clr-pampers-blue: #02aec1;
+  --clr-piggy-pink: #faaf84;
+}
+
+html {
+  ggcolor-scheme: light dark;
+}
+
+body {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+}
+
+.card {
+  width: 25rem;
+  aspect-ratio: 9 / 16;
+  /* background-image: url("/assets/yoda-on-dagobah.jpg"); */
+  position: relative;
+  transform-style: preserve-3d;
+  transition: rotate var(--timing) ease;
+
+  &:hover {
+    rotate: x var(--rotation);
+  }
+
+  &:hover .bg-image {
+    transition: var(--timing);
+    filter: blur(10px);
+    opacity: 0.5;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    background-image: radial-gradient(circle, transparent 150px, var(--clr-pampers-blue));
+    opacity: 0;
+    transition: opacity var(--timing);
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 80% 0.5rem 0.5rem;
+    translate: 0;
+    transform: translateZ(-100px);
+    background: var(--clr-pampers-blue);
+    filter: blur(1rem);
+    z-index: 1;
+    transition: rotate var(--timing), translate var(--timing);
+  }
+
+  &:hover::after {
+    rotate: x calc(var(--rotation) * -1);
+    translate: 0 60px;
+  }
+
+  &:hover .logo {
+    transform: translateY(-2rem) translateZ(20px);
+    rotate: x calc(var(--rotation) * -1);
+  }
+
+  &:hover .fg-image {
+    opacity: 1;
+    scale: 1;
+    transform: translateY(-2rem) translateZ(-10px);
+    rotate: x calc(var(--rotation) * -1);
+  }
+}
+
+.bg-image {
+  transition: var(--timing);
+  position: absolute;
+  z-index: 10;
+  height: 100%;
+  object-fit: contain;
+  gobject-position: -150px center;
+}
+
+.logo,
+.fg-image {
+  position: absolute;
+}
+.logo {
+  z-index: 1000;
+  width: 100%;
+  inset: auto 0 2rem;
+  transform: translateY(0rem) translateZ(20px);
+  transition: var(--timing);
+}
+.name {
+  font-family: simpsons;
+  font-size: 3rem;
+  margin-inline: auto;
+  color: var(--clr-piggy-pink);
+  width: 90%;
+  text-align: center;
+}
+
+.fg-image {
+  scale: 1.125;
+  transform-origin: bottom;
+  opacity: 0;
+  scale: 0;
+  z-index: 100;
+  transition: var(--timing);
+}
